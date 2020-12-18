@@ -45,6 +45,6 @@ SELECT price,POWER(price,2) FROM store;
 
 #f Write SQL querry to divide the amount in stock of each item by 7 in store table and display the result round to the nearest integer.
 
-SELECT ROUND(mrP DIV 7)FROM store;
+SELECT ROUND(mrp DIV 7)FROM store;
 
 -----------------------------------------------
