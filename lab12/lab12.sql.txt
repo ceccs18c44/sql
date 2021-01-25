@@ -1,0 +1,69 @@
+NAME  : PARVATHY KRISHNAN
+REG NO: CHN18CS095
+
+EXPERIMENT NO: 12
+
+Implementation of join operator
+
+CODES :
+
+use college1;
+create table SAILORS (
+	SID INTEGER PRIMARY KEY,
+	S_NAME VARCHAR(60),
+	RATING INTEGER,
+    AGE INTEGER);
+INSERT INTO SAILORS VALUES
+     (01,"DENNIS",6,37),
+     (02,"YOKESH",5,50),
+     (03,"HARRIS",7,32);
+------------------------------------------     
+     CREATE TABLE BOATS(
+    BID INTEGER,
+    B_NAME VARCHAR(70),
+    COLOUR VARCHAR(15) );
+
+ INSERT INTO BOATS VALUES
+    (100,"VAHINI",'GREEN'),
+    (101,"ARIZONA",'BLACK'),
+    (102,"HARRY", 'RED');
+---------------------------------------------
+   
+CREATE TABLE RESERVES(
+     SID INTEGER,
+     BID INTEGER,
+     DAY DATE );
+ INSERT INTO RESERVES VALUES
+	 (01,101,'2021-01-10'),
+     (02,104,'2021-01-06'),
+     (03,104,'2021-01-10'),
+     (04,103,'2021-01-11');
+---------------------------------------------
+	
+SELECT a.sid, a.s_name, a.rating, a.age
+FROM sailors AS a
+INNER JOIN reserves AS c ON a.sid = c.sid AND c.bid =101;
+---------------------------------------------
+
+SELECT b.b_name
+FROM reserves AS c
+INNER JOIN sailors AS a ON a.sid = c.sid AND a.s_name = 'Bob'
+INNER JOIN boats AS b ON b.bid = c.bid;
+-----------------------------------------------
+
+SELECT a.s_name
+FROM sailors AS a
+INNER JOIN reserves AS c ON a.sid = c.sid
+INNER JOIN boats AS b ON b.bid = c.bid AND b.colour = 'red'
+ORDER BY a.age;
+----------------------------------------------
+
+SELECT DISTINCT a.s_name
+FROM sailors AS a
+INNER JOIN reserves AS c ON a.sid IN (c.sid);
+----------------------------------------------
+
+SELECT a.sid,a.s_name
+FROM reserves AS c
+INNER JOIN reserves AS d ON c.sid <> d.sid AND c.day = d.day
+INNER JOIN sailors AS a ON d.sid = a.sid;
