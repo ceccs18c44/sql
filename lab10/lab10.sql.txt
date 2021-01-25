@@ -1,0 +1,49 @@
+NAME   : PARVATHY KRISHNAN
+REG NO : CHN18CS095
+
+EXPERIMENT NO: 10 
+
+Write a PL/SQL block to illustrate the use of implicit cursor
+
+CODE: 
+
+
+CREATE TABLE EMPLOYEE2( 
+  CODE VARCHAR(5) PRIMARY KEY, 
+  NAME VARCHAR(25) NOT NULL,
+  DOB DATE, 
+  DESGNATION VARCHAR(20) NOT NULL ,
+  SALARY DECIMAL(10,2));
+
+-------------------------------------
+
+INSERT INTO EMPLOYEE2 VALUES
+    ("A1","JULIA","1994-05-19","MANAGER",70000.00),
+    ("A2","NAVIN","1987-12-24","CLERK",30000.00),
+    ("A3","STEPHY","2000-10-18","CASHIER",25000.00);
+--------------------------------------
+
+CREATE TABLE CUR( NAME VARCHAR(70),DOB DATE, SALARY FLOAT);
+DELIMITER //
+CREATE PROCEDURE IMP()
+BEGIN
+    DECLARE done INT  DEFAULT FALSE;
+    DECLARE emp_name VARCHAR(70);
+    DECLARE emp_dob DATE;
+    DECLARE emp_salary FLOAT;
+    DECLARE emp_record CURSOR FOR SELECT  name, dob, salary FROM employee2;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET DONE= TRUE;
+    
+	OPEN emp_record;
+    read_loop:LOOP 
+         FETCH emp_record INTO emp_name,emp_dob,emp_salary;
+		 IF done THEN
+           LEAVE read_loop;
+		 END IF;
+          INSERT INTO CUR VALUES(emp_name,emp_dob,emp_salary);
+    END LOOP;
+   CLOSE emp_record;
+END;//
+DELIMITER ;
+CALL IMP();
+SELECT *FROM CUR;
